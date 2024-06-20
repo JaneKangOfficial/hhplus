@@ -1,6 +1,6 @@
 package io.hhplus.tdd.database;
 
-import io.hhplus.tdd.point.UserPoint;
+import io.hhplus.tdd.point.UserPointEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -13,16 +13,16 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class UserPointTable {
 
-    private final Map<Long, UserPoint> table = new HashMap<>();
+    private final Map<Long, UserPointEntity> table = new HashMap<>();
 
-    public UserPoint selectById(Long id) {
+    public UserPointEntity selectById(Long id) {
         throttle(200);
-        return table.getOrDefault(id, UserPoint.empty(id));
+        return table.getOrDefault(id, UserPointEntity.empty(id));
     }
 
-    public UserPoint insertOrUpdate(long id, long amount) {
+    public UserPointEntity insertOrUpdate(long id, long amount) {
         throttle(300);
-        UserPoint userPoint = new UserPoint(id, amount, System.currentTimeMillis());
+        UserPointEntity userPoint = new UserPointEntity(id, amount, System.currentTimeMillis());
         table.put(id, userPoint);
         return userPoint;
     }
